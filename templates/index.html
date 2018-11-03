@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %} Webmail {% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+      {% if error_message %}
+        <div class="alert alert-primary">{{ error_message }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if not message_list %}
+    <div class="row">
+      <div class="col-sm-5 col-md-5 col-xs-12">
+        <h2>Login</h3>
+          <form method="post" action='.'> {% csrf_token %}
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+      </div>
+    </div>
+  {% else %}
+    <div class="row">
+        <div class="col-sm-5 col-md-5 col-xs-12">
+          <h2>Message list</h3>
+            {% for message in message_list %}
+              <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ message.from }}</h5>
+                    <small>{{ mesage.date }}</small>
+                    <p class="card-text">{{ message.subject}}</p>
+                  </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div> 
+  {% endif %}
+
+
+
+{% endblock %}
